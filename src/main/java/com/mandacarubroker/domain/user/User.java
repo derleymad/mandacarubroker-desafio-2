@@ -24,13 +24,41 @@ public class User implements UserDetails {
     private String id;
     private String login;
     private String password;
-    private UserRole role;
 
-    public User(String login, String password, UserRole role){
+    private String firstName;
+    private String lastName;
+    private String birthDate; // lembrar * apenas para maiores de 18 anos
+    private Double balance;
+
+    private UserRole role; // estamos adicionando um extra para administrar quem pode inserir novas ações
+
+    public User(String login, String password, UserRole role, String firstName, String lastName, String birthDate, Double balance){
         this.login = login;
         this.password = password;
         this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.balance = balance != null ? balance : 0.0;
     }
+
+    public void deposit(double amount) throws Exception {
+        if (amount <= 0) {
+            throw new Exception("O valor do depósito deve ser maior que zero.");
+        }
+        this.balance += amount;
+    }
+
+    public void withdraw(double amount) throws Exception {
+        if (amount <= 0) {
+            throw new Exception("O valor do saque deve ser maior que zero.");
+        }
+        if (amount > this.balance) {
+            throw new Exception("Saldo insuficiente para realizar o saque.");
+        }
+        this.balance -= amount;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -42,6 +70,8 @@ public class User implements UserDetails {
     public String getUsername() {
         return login;
     }
+
+    public User getUser(){return this;}
 
     @Override
     public boolean isAccountNonExpired() {
