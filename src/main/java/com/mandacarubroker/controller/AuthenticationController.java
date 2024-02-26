@@ -1,12 +1,10 @@
 package com.mandacarubroker.controller;
 
-
 import com.mandacarubroker.domain.user.*;
 import com.mandacarubroker.infra.security.TokenService;
 import com.mandacarubroker.service.RegisterService;
 import com.mandacarubroker.utils.ErrorResponse;
 import com.mandacarubroker.utils.OkResponse;
-import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -30,7 +28,6 @@ public class AuthenticationController {
     private TokenService tokenService;
     @Autowired
     private RegisterService registerService;
-
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
