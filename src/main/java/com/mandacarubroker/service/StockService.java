@@ -2,6 +2,7 @@ package com.mandacarubroker.service;
 
 import com.mandacarubroker.domain.stock.RequestStockDTO;
 import com.mandacarubroker.domain.stock.Stock;
+import com.mandacarubroker.domain.stock.StockNotFoundException;
 import com.mandacarubroker.domain.stock.StockRepository;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +34,8 @@ public class StockService {
 
     public Stock validateAndCreateStock(RequestStockDTO data) {
         validateRequestStockDTO(data);
-        Stock novaAcao = new Stock(data);
-        return stockRepository.save(novaAcao);
+        Stock stock = new Stock(data);
+        return stockRepository.save(stock);
     }
 
     public Optional<Stock> updateStock(String id, Stock updatedStock) {
@@ -48,8 +49,13 @@ public class StockService {
                 });
     }
 
-    public void deleteStock(String id) {
-        stockRepository.deleteById(id);
+    public void deleteStock(String id) throws StockNotFoundException {
+        Optional<Stock> stock = stockRepository.findById(id);
+        if (stock.isPresent()) {
+            stockRepository.deleteById(id);
+        } else {
+            throw new StockNotFoundException("Stock not found with ID: " + id);
+        }
     }
 
     public static void validateRequestStockDTO(RequestStockDTO data) {
