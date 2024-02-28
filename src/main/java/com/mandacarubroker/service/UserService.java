@@ -25,16 +25,20 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    //public Optional<User> getUserByUsername(String username) {
+      //  return userRepository.findbyLogin(username);
+   // }
+
     public void validateAndDeposit(String username, double amount) throws Exception {
 
         User user = (User) userRepository.findByLogin(username);
-
         if (user == null) {
             throw new UsernameNotFoundException("Usuário não encontrado.");
         } else {
             if (Objects.equals(user.getUsername(), username)) {
                 user.deposit(amount);
                 userRepository.save(user);
+
             } else {
                 throw new UsernameNotFoundException("Usuário não encontrado.");
             }

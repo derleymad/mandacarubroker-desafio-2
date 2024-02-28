@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Pattern;
 
 public record RequestStockDTO(
-        @Pattern(regexp = "[A-Za-z]{3}[0-9]{1}", message = "Symbol must be 3 letters followed by 1 number")
+        @Pattern(regexp = "[A-Za-z]{4}[0-9]{1}", message = "Symbol must be 4 letters followed by 1 number")
         String symbol,
         @NotBlank(message = "Company name cannot be blank")
         String companyName,

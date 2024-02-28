@@ -1,10 +1,7 @@
 package com.mandacarubroker.domain.user;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +11,7 @@ import java.util.List;
 
 @Table(name = "users")
 @Entity(name = "users")
+@Data
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,7 +22,8 @@ public class User implements UserDetails {
     private String id;
     private String login;
     private String password;
-
+    @Getter
+    private String email;
     private String firstName;
     private String lastName;
     private String birthDate; // lembrar * apenas para maiores de 18 anos
@@ -32,10 +31,11 @@ public class User implements UserDetails {
 
     private UserRole role; // estamos adicionando um extra para administrar quem pode inserir novas ações
 
-    public User(String login, String password, UserRole role, String firstName, String lastName, String birthDate, Double balance){
+    public User(String login, String encryptedPassword, UserRole role, String email,String firstName, String lastName, String birthDate, Double balance){
         this.login = login;
-        this.password = password;
+        this.password = encryptedPassword;
         this.role = role;
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
@@ -70,8 +70,6 @@ public class User implements UserDetails {
     public String getUsername() {
         return login;
     }
-
-    public User getUser(){return this;}
 
     @Override
     public boolean isAccountNonExpired() {

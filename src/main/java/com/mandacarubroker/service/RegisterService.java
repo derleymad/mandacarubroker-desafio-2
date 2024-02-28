@@ -45,7 +45,7 @@ public class RegisterService {
             if(this.isValidAge(data.birthDate())){
                 String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
 
-                User user = new User(data.login(),encryptedPassword, data.role(),data.firstName(),data.lastName(),data.birthDate(),data.balance());
+                User user = new User(data.login(),encryptedPassword, data.role(),data.email(),data.firstName(),data.lastName(),data.birthDate(),data.balance());
                 userRepository.save(user);
             } else{
                 throw new Exception("Usuário com menos de 18 anos.");

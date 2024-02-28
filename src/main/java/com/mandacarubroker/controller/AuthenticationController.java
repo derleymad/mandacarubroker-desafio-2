@@ -35,6 +35,7 @@ public class AuthenticationController {
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
         var token = tokenService.generateToken((User) auth.getPrincipal());
+
         HttpHeaders headers = new HttpHeaders();
         //headers.add("Authorization", "Bearer " + token); // Adiciona o token no cabeçalho Authorization
 
@@ -44,7 +45,6 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
         if(this.repository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
-
         try{
             this.registerService.validateRequestRegisterDTO(data);
             return ResponseEntity.ok().body(new OkResponse("Usuário criado com sucesso."));
