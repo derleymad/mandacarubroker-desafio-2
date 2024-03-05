@@ -1,7 +1,6 @@
-package com.mandacarubroker;
+package com.mandacarubroker.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mandacarubroker.controller.StockController;
 import com.mandacarubroker.domain.stock.Stock;
 import com.mandacarubroker.domain.stock.RequestStockDTO;
 import com.mandacarubroker.service.StockService;
