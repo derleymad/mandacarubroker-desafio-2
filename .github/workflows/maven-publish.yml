@@ -1,7 +1,10 @@
 name: Maven Package
 
-on: [pull_request, push]
-
+on: 
+  pull_request:
+    branches: [develop]
+  push:
+    branches: [develop]
 jobs:
   build:
     runs-on: ubuntu-latest
